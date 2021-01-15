@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>로또 번호 추천 웹사이트</title>
+    <meta charset="utf-8" />
+    <meta name = "Keywords" content="lotto, javascript, 로또, 로또 번호 추천, 로또 당첨" />
+    <meta name = "Description" content = "자바스크립트로 만든 로또 번호 추천을 위한 웹사이트입니다. 
+    저장할 필요 없이 바로 로또 번호를 추천 받을 수 있습니다." />
+
+    <style>
+        #maincanvas{
+            display: block;
+            margin: 0 auto;
+        }
+        html{
+            background-color: rgb(219, 213, 207);
+        }
+        .container{
+            display: flex;
+            flex-direction: column;
+        }
+        header{
+            border-bottom: 1px solid gray;
+            height: 60px;
+            padding-top: 10px;
+        }
+        footer{
+            border-top: 1px solid gray;
+            padding: 20px;
+            text-align: center;
+        }
+        .content{
+            display: flex;
+        }
+        .content nav{
+            border-right: 1px solid gray;
+        }
+        .content aside{
+            border-left: 1px solid gray;
+        }
+        nav, aside {
+            width: 15%;
+            /* flex-shrink: 0; */
+        }
+        main{
+            padding: 10px;
+            width: 100%; 
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div style = "text-align: center; font: bold 30px Arial ">로또 번호 추천</div>
+        </header>
+        <section class = "content">
+            <nav>
+                <img src="/tmp/guest-mdmtx9/Desktop/istockphoto-872572142-170667a.jpg" alt="네잎클로버" width = "200" height="400">
+            </nav>
+            <main>
+                <canvas id = "maincanvas" width = "1000", height = "300"></canvas>
+                <input type = "button" value="번호 추첨 받기" onclick="draw()">
+            </main>
+            <aside>
+                "AD"
+            </aside>
+        </section>
+        <footer>
+            good luck
+        </footer>
+
+    </div>
+<script>
+    var canvas = document.getElementById("maincanvas");
+    var ctx = canvas.getContext("2d");
+
+    function draw(){
+        drawBall(selectBall());
+    }
+
+    function drawBall(arr){
+        for(var i = 0; i < arr.length; i++){
+            if(i == 6){
+                continue;
+            }
+            ctx.beginPath();
+            ctx.arc(canvas.width/9*(i+1),canvas.height/2,30,0,Math.PI*2,false);
+            if(arr[i]<=10){
+                ctx.fillStyle = "rgb(255,215,0)";
+            } else if(arr[i] <= 20){
+                ctx.fillStyle = "blue";
+            } else if(arr[i] <= 30){
+                ctx.fillStyle = "red";
+            } else if(arr[i] <= 40){
+                ctx.fillStyle = "black";
+            } else{
+                ctx.fillStyle = "green"
+            }
+            ctx.fill();
+            ctx.closePath();
+            ctx.font = "bold 30px Arial"
+            ctx.fillStyle = "white";
+            if(arr[i]<10){
+                ctx.fillText(String(arr[i]),canvas.width/9*(i+1)-7.5,canvas.height/2+7.5);
+
+            } else{
+                ctx.fillText(String(arr[i]),canvas.width/9*(i+1)-15,canvas.height/2+7.5);
+            }
+        }
+    }
+    function selectBall(){
+        var numbers = [];
+        while(numbers.length != 8){
+            var check = 0;
+            var number = Math.floor(45*Math.random()+1);
+            for(var i =0; i < numbers.length; i++){
+                if(numbers[i] == number){
+                    check = 1;
+                }
+            }
+            if(check == 1){
+                continue;
+            }
+            numbers.push(number);
+        }
+        return numbers;
+    }
+    
+    //1~10 yellow 11~20 blue 21~30 red 31~40 black 41~45 green
+
+</script>    
+</body>
+</html>
